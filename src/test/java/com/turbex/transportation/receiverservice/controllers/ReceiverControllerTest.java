@@ -41,11 +41,11 @@ public class ReceiverControllerTest {
         Product cellPhone = new Product("cellPhone", 11.0, 18.0, 4.0, 560.0, Long.decode("1"));
         List<Product> products = new ArrayList<Product>();
         products.add(cellPhone);
-        //demandDTO.setProducts(products);
         UUID demandTransactionId = UUID.randomUUID();
         DispatchType dispatchType = DispatchType.NORMAL;
         Long partnerId = Long.decode("1");
         demandDTO = new DemandDTO(demandTransactionId,products, dispatchType, partnerId);
+        demand = new Demand(demandDTO.getProducts(), demandDTO.getDemandTransactionId(), demandDTO.getDispatchType());
     }
 
     @Test()
@@ -55,13 +55,11 @@ public class ReceiverControllerTest {
 
     @Test
     public void demandMustHasProducts() {
-        AssertionErrors.assertNotNull("", demandDTO.getProducts());
-        //AssertionErrors.assertEquals("",demandDTO.getProducts(), demand.getProducts());
+        AssertionErrors.assertEquals("",demandDTO.getProducts(), demand.getProducts());
     }
 
     @Test
     public void mustValidARequest() throws Exception {
-
         demand = new Demand(demandDTO.getProducts(), demandDTO.getDemandTransactionId(), demandDTO.getDispatchType());
         this.mockMvc.perform(post("/")
                 .contentType(MediaType.APPLICATION_JSON)

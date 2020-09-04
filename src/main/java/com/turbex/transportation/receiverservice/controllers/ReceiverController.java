@@ -3,7 +3,9 @@ package com.turbex.transportation.receiverservice.controllers;
 import com.turbex.transportation.receiverservice.dtos.DemandDTO;
 import com.turbex.transportation.receiverservice.entities.Demand;
 import com.turbex.transportation.receiverservice.entities.Product;
+import com.turbex.transportation.receiverservice.services.ReceiverService;
 import com.turbex.transportation.receiverservice.types.DispatchType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/")
 public class ReceiverController {
+
+    @Autowired
+    ReceiverService receiverService;
+
     @GetMapping("/")
     public ResponseEntity<DemandDTO> index() {
         Product cellPhone = new Product("cellPhone", 11.0, 18.0, 4.0, 560.0, Long.decode("1"));
@@ -29,7 +35,7 @@ public class ReceiverController {
 
     @PostMapping("/")
     public ResponseEntity<Demand> create(@RequestBody DemandDTO demandDTO) {
-        Demand demand = new Demand(demandDTO.getProducts(), demandDTO.getDemandTransactionId(), demandDTO.getDispatchType());
+        Demand demand = receiverService.create(demandDTO);
         return ResponseEntity.ok(demand);
     }
 }
