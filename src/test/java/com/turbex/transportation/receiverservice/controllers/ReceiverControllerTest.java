@@ -2,15 +2,18 @@ package com.turbex.transportation.receiverservice.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.turbex.transportation.receiverservice.dtos.DemandDTO;
+import com.turbex.transportation.receiverservice.entities.Demand;
 import com.turbex.transportation.receiverservice.entities.Product;
 import com.turbex.transportation.receiverservice.helpers.ConverterParameters;
 import com.turbex.transportation.receiverservice.types.DispatchType;
 import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.util.AssertionErrors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.Assert;
 
@@ -31,12 +34,14 @@ public class ReceiverControllerTest {
     ReceiverController receiverController;
     
     private DemandDTO demandDTO;
+    private Demand demand;
     
-    @Before("")
+    @BeforeEach()
     public void init() {
         Product cellPhone = new Product("cellPhone", 11.0, 18.0, 4.0, 560.0, Long.decode("1"));
         List<Product> products = new ArrayList<Product>();
         products.add(cellPhone);
+        //demandDTO.setProducts(products);
         UUID demandTransactionId = UUID.randomUUID();
         DispatchType dispatchType = DispatchType.NORMAL;
         Long partnerId = Long.decode("1");
@@ -47,11 +52,20 @@ public class ReceiverControllerTest {
     public void controllerMustExists() {
         Assert.notNull(receiverController, "");
     }
+
+    @Test
+    public void demandMustHasProducts() {
+        AssertionErrors.assertNotNull("", demandDTO.getProducts());
+        //AssertionErrors.assertEquals("",demandDTO.getProducts(), demand.getProducts());
+    }
+
     @Test
     public void mustValidARequest() throws Exception {
+
+        demand = new Demand(demandDTO.getProducts(), demandDTO.getDemandTransactionId(), demandDTO.getDispatchType());
         this.mockMvc.perform(post("/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(ConverterParameters.converterToJson(demandDTO)))
-                .andExpect(result -> ConverterParameters.converterToJson(demandDTO));
+                .andExpect(result -> ConverterParameters.converterToJson(demand));
     }
 }

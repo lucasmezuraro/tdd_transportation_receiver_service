@@ -4,7 +4,9 @@ import com.turbex.transportation.receiverservice.entities.Product;
 import com.turbex.transportation.receiverservice.types.DispatchType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
