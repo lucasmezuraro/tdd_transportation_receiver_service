@@ -23,5 +23,4 @@ public class Product {
     @NonNull
     private Long partnerId;
     private Date receivedAt = new Date();
-    private Status status = Status.PENDING;
 }
