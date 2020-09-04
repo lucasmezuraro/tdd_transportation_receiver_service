@@ -1,12 +1,12 @@
 package com.turbex.transportation.receiverservice.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.turbex.transportation.receiverservice.dtos.Demand;
+import com.turbex.transportation.receiverservice.dtos.DemandDTO;
 import com.turbex.transportation.receiverservice.entities.Product;
+import com.turbex.transportation.receiverservice.helpers.ConverterParameters;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,17 +28,11 @@ public class ReceiverControllerTest {
     @Autowired
     ReceiverController receiverController;
 
-    public static String converterToJson(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     @Test()
     public void controllerMustExists() {
-        Assert.notNull(receiverController, "Está funcionando");
+        Assert.notNull(receiverController, "");
     }
     @Test
     public void mustValidARequest() throws Exception {
@@ -46,9 +40,9 @@ public class ReceiverControllerTest {
         List<Product> products = new ArrayList<Product>();
         products.add(cellPhone);
         UUID partnerId = UUID.randomUUID();
-        Demand demand = new Demand(partnerId, products);
+        DemandDTO demandDTO = new DemandDTO(partnerId, products);
         this.mockMvc.perform(post("/")
-                .contentType(MediaType.APPLICATION_JSON).content(converterToJson(demand)))
-                .andExpect(result -> converterToJson(demand));
+                .contentType(MediaType.APPLICATION_JSON).content(ConverterParameters.converterToJson(demandDTO)))
+                .andExpect(result -> ConverterParameters.converterToJson(demandDTO));
     }
 }

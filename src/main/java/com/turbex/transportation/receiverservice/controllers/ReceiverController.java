@@ -1,6 +1,6 @@
 package com.turbex.transportation.receiverservice.controllers;
 
-import com.turbex.transportation.receiverservice.dtos.Demand;
+import com.turbex.transportation.receiverservice.dtos.DemandDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ public class ReceiverController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Demand> create(@Validated @RequestBody Demand demand) {
-        return ResponseEntity.ok(demand);
+    public ResponseEntity<DemandDTO> create(@Validated @RequestBody DemandDTO demandDTO) {
+        return ResponseEntity.ok(demandDTO);
     }
 }

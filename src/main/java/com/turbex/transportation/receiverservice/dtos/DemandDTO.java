@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class Demand {
+public class DemandDTO {
     private UUID demandTransactionId;
     private List<Product> products;
 }
