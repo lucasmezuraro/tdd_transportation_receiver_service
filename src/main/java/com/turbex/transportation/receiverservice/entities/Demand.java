@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,8 +14,17 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@Entity
 public class Demand implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
+
     @NotEmpty(message = "products list must be defined on the entity")
+    @Column(name = "products")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "products_id")
     private List<Product> products;
     @NotEmpty(message = "demand transaction must be defined on the entity")
     private UUID demandTransactionId;

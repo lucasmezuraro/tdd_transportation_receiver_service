@@ -9,7 +9,7 @@ spring:
       name: "ReceiverService"
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5475/turbex_receiver_service}
-    username: "spring"
+    username: "postgres"
     password: 1234
     jpa:
       show-sql: false
