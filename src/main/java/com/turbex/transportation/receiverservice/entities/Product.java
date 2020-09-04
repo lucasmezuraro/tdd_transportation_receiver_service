@@ -2,6 +2,7 @@ package com.turbex.transportation.receiverservice.entities;
 
 import com.turbex.transportation.receiverservice.types.Status;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Product {
     @Id

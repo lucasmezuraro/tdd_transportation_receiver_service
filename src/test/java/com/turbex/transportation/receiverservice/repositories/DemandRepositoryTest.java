@@ -56,4 +56,18 @@ public class DemandRepositoryTest {
       Optional<Demand> demandOptional = demandRepository.findById(idDemand);
         Assert.assertFalse(demandOptional.isPresent());
     }
+
+    @Test
+    public void ShoudAddADemandProduct() {
+        Demand demandSaved = demandRepository.save(demand);
+        Long idDemand = demandSaved.getId();
+        Optional<Demand> demandOptional = demandRepository.findById(idDemand);
+        Demand demandFound = demandOptional.get();
+        List<Product> products = demandFound.getProducts();
+        Product product2 = new Product("TV", 120.0, 90.0, 45.0, 2560.0, Long.decode("1"));
+        products.add(product2);
+        demandFound.setProducts(products);
+        Demand demandUpdated = demandRepository.save(demandFound);
+        Assert.assertEquals(2, demandFound.getProducts().size());
+    }
 }

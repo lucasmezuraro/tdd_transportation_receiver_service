@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReceiverService {
 
+
     public Demand create(DemandDTO demandDTO) {
         return new Demand(demandDTO.getProducts(), demandDTO.getDemandTransactionId(), demandDTO.getDispatchType());
     }
