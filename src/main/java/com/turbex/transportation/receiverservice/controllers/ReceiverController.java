@@ -24,15 +24,9 @@ public class ReceiverController {
     ReceiverService receiverService;
 
     @GetMapping("/")
-    public ResponseEntity<DemandDTO> index() {
-        Product cellPhone = new Product("cellPhone", 11.0, 18.0, 4.0, 560.0, Long.decode("1"));
-        List<Product> products = new ArrayList<Product>();
-        products.add(cellPhone);
-        UUID demandTransactionId = UUID.randomUUID();
-        DispatchType dispatchType = DispatchType.NORMAL;
-        Long partnerId = Long.decode("1");
-        DemandDTO demandDTO = new DemandDTO(demandTransactionId,products, dispatchType, partnerId);
-        return ResponseEntity.ok(demandDTO);
+    public ResponseEntity<List<Demand>> index() {
+        List<Demand> demands = receiverService.findAll();
+        return ResponseEntity.ok(demands);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
