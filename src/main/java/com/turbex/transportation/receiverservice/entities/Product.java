@@ -1,5 +1,6 @@
 package com.turbex.transportation.receiverservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.turbex.transportation.receiverservice.types.Status;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,24 +14,33 @@ import java.util.Date;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name="product")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @NonNull
+    @Column
     private String description;
     @NonNull
+    @Column
     private double width;
+    @Column
     @NonNull
     private double height;
+    @Column
     @NonNull
     private double depth;
+    @Column
     @NonNull
     private double weight;
+    @Column
     @NonNull
     private Long partnerId;
+    @Column
     private Date receivedAt = new Date();
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id")
-    private Demand demand;
+    /*@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "demand_demand_id")
+    @JsonIgnoreProperties("products")
+    private Demand demand;*/
 }

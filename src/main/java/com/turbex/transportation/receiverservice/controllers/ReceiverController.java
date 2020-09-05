@@ -45,4 +45,17 @@ public class ReceiverController {
         return ResponseEntity.ok(demand);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody DemandDTO demandDTO) {
+        Demand demand = receiverService.update(id, demandDTO);
+        return new ResponseEntity<Object>(demand, HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> find(@PathVariable("id") Long id) {
+        Demand demand = receiverService.findOne(id);
+        System.out.println(demand.toString());
+        return new ResponseEntity<Object>(demand, HttpStatus.FOUND);
+    }
+
 }

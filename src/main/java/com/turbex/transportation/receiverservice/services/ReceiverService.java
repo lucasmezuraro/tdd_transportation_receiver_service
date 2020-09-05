@@ -22,4 +22,14 @@ public class ReceiverService {
         return demandRepository.findById(id)
                 .orElseThrow(() -> new DemandNotFoundException("Demand with id: "+id+" is not found"));
     }
+
+    public Demand update(Long id, DemandDTO demandDTO){
+        Demand demand = demandRepository.findById(id)
+                .orElseThrow(() -> new DemandNotFoundException("Demand with id: "+id+" is not found"));
+        demand.setProducts(demandDTO.getProducts());
+        demand.setDispatchType(demandDTO.getDispatchType());
+        demand.setDemandTransactionId(demandDTO.getDemandTransactionId());
+        Demand demandUpdated = demandRepository.save(demand);
+        return demandUpdated;
+    }
 }
