@@ -36,4 +36,13 @@ public class ReceiverService {
         Demand demandUpdated = demandRepository.save(demand);
         return demandUpdated;
     }
+
+    public boolean remove(Long id){
+        try {
+            demandRepository.deleteById(id);
+            return true;
+        } catch(Exception e) {
+            throw new DemandNotFoundException("Demand with id: "+id+" is not found");
+        }
+    }
 }

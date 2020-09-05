@@ -15,8 +15,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -54,5 +56,24 @@ public class ReceiverServiceTest {
         when(demandRepository.save(any(Demand.class))).thenReturn(demand);
         Demand demand2 = receiverService.create(demandDTO);
         Assert.assertEquals(demand2.getDemandTransactionId(), demandDTO.getDemandTransactionId());
+    }
+
+    @Test
+    public void ShouldFindADemandByService() throws Exception{
+        Long id = Long.decode("1");
+        demand = new Demand(demandDTO.getProducts(), demandDTO.getDemandTransactionId(), demandDTO.getDispatchType());
+        demand.setId(id);
+        when(demandRepository.findById(any())).thenReturn(Optional.of(demand));
+        Demand demand2 = receiverService.findOne(id);
+        Assert.assertEquals(demand2.getId(), id);
+    }
+
+    @Test
+    public void ShouldDeleteADemandByService() throws Exception{
+        demand = new Demand(demandDTO.getProducts(), demandDTO.getDemandTransactionId(), demandDTO.getDispatchType());
+        when(demandRepository.save(any(Demand.class))).thenReturn(demand);
+        Demand demand2 = receiverService.create(demandDTO);
+        receiverService.remove(demand2.getId());
+        verify(demandRepository).deleteById(any());
     }
 }

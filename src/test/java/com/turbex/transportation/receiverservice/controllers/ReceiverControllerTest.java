@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.util.AssertionErrors;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -86,6 +84,36 @@ public class ReceiverControllerTest {
     @Test
     public void ShouldReturnANotFoundException() throws Exception {
         this.mockMvc.perform(get("/{id}", 10000))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void ShouldReturnABadRequestWhenTryUpdateDemand() throws Exception {
+        this.mockMvc.perform(put("/{id}", 10000))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void ShouldReturnANotFoundWhenTryUpdateDemand() throws Exception {
+        this.mockMvc.perform(put("/{id}", 10000)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(ConverterParameters.converterToJson(demandDTO)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void ShouldReturnASuccessUpdateDemand() throws Exception {
+        DemandDTO demandDTOUpdate = new DemandDTO(demandDTO.getDemandTransactionId(), demandDTO.getProducts(), DispatchType.DANGER, demandDTO.getPartnerId());
+        this.mockMvc.perform(put("/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(ConverterParameters.converterToJson(demandDTOUpdate)))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void ShouldReturnANotFoundWhenDeleteDemand() throws Exception {
+        this.mockMvc.perform(delete("/{id}", 10000)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
