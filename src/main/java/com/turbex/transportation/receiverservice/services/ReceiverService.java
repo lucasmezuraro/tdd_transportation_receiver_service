@@ -7,12 +7,15 @@ import com.turbex.transportation.receiverservice.repositories.DemandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class ReceiverService {
 
     @Autowired
     DemandRepository demandRepository;
 
+    @Transactional
     public Demand create(DemandDTO demandDTO) {
         Demand demand = new Demand(demandDTO.getProducts(), demandDTO.getDemandTransactionId(), demandDTO.getDispatchType());
         return demandRepository.save(demand);
@@ -23,6 +26,7 @@ public class ReceiverService {
                 .orElseThrow(() -> new DemandNotFoundException("Demand with id: "+id+" is not found"));
     }
 
+    @Transactional
     public Demand update(Long id, DemandDTO demandDTO){
         Demand demand = demandRepository.findById(id)
                 .orElseThrow(() -> new DemandNotFoundException("Demand with id: "+id+" is not found"));
