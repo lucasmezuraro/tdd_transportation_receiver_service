@@ -7,6 +7,7 @@ import com.turbex.transportation.receiverservice.helpers.ConverterParameters;
 import com.turbex.transportation.receiverservice.types.DispatchType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,7 +33,7 @@ public class ReceiverControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Mock
     ReceiverController receiverController;
     
     private DemandDTO demandDTO;
@@ -80,4 +82,12 @@ public class ReceiverControllerTest {
                 .content(ConverterParameters.converterToJson(demandDTOError)))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void ShouldReturnANotFoundException() throws Exception {
+        this.mockMvc.perform(get("/{id}", 10000))
+                .andExpect(status().isNotFound());
+    }
+
+
 }
