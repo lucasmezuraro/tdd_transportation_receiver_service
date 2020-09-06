@@ -1,4 +1,6 @@
 #!/usr/bin/env groovy
+import org.apache.commons.lang.SystemUtils
+
 pipeline {
     agent any
     stages {
