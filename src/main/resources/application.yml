@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-      name: "ReceiverService"
+      name: "ReceiverService2"
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5475/turbex_receiver_service}
     username: "postgres"
