@@ -107,7 +107,7 @@ public class ReceiverControllerTest {
         this.mockMvc.perform(put("/{id}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(ConverterParameters.converterToJson(demandDTOUpdate)))
-                .andExpect(status().isNotFound());
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
