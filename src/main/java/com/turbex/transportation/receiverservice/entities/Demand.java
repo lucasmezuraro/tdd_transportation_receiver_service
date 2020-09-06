@@ -1,12 +1,9 @@
 package com.turbex.transportation.receiverservice.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.turbex.transportation.receiverservice.types.DispatchType;
 import com.turbex.transportation.receiverservice.types.Status;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
