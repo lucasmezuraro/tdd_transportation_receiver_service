@@ -102,12 +102,12 @@ public class ReceiverControllerTest {
     }
 
     @Test
-    public void ShouldReturnASuccessUpdateDemand() throws Exception {
+    public void ShouldReturnAFailsWhenUpdateDemand() throws Exception {
         DemandDTO demandDTOUpdate = new DemandDTO(demandDTO.getDemandTransactionId(), demandDTO.getProducts(), DispatchType.DANGER, demandDTO.getPartnerId());
         this.mockMvc.perform(put("/{id}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(ConverterParameters.converterToJson(demandDTOUpdate)))
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().isNotFound());
     }
 
     @Test
