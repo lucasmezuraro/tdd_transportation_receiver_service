@@ -4,19 +4,19 @@ pipeline {
     stages {
         stage("Build Maven") {
             steps {
-                if (isUnix()) {
-                    sh 'mvn -B clean package'
-                }else {
+                if (SystemUtils.IS_OS_WINDOWS) {
                     bat 'mvn -B clean package'
+                }else {
+                    sh 'mvn -B clean package'
                 }
             }
         }
         stage("Maven Tests") {
              steps {
-                if (isUnix()) {
-                    sh 'mvn -B test'
-                }else {
+                if (SystemUtils.IS_OS_WINDOWS) {
                     bat 'mvn -B test'
+                }else {
+                    sh 'mvn -B test'
                 }
             }
         }
