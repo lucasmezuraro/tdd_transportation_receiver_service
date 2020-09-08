@@ -12,7 +12,7 @@
 
 #### Development process.
 I am try use TDD to develop it, with small commits and inserting well practics when is possible.
-It's not finished, am working on, but university is calling and i need do the activities and follow the course.
+It's not finished, am working on, but university is calling and i need do the activities and follow the course, and this is only free time, and restlessness(google translator)?
 #### Core responsibility?
 
 Well, the application will be responsible to administrate the receive of transport demands. When it receive a new demand, will prepare, save and send to Expediction Service work on.
