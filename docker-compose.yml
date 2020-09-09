@@ -14,9 +14,24 @@ services:
       - "5475:5432"
     networks:
       - application_ds
+  redis:
+    container_name: redis_ds
+    image: 'docker.io/bitnami/redis:6.0-debian-10'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis_data:/bitnami/redis/data'
+    networks:
+      - application_ds
 networks:
   application_ds:
     driver: bridge
 volumes:
+  redis_data:
+    driver: local
   database:
     driver: local

@@ -7,6 +7,10 @@ server:
 spring:
   application:
       name: "ReceiverService2"
+  cache:
+    type: redis
+    host: ${REDIS_HOST:localhost}
+    port: 6379
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5475/turbex_receiver_service}
     username: "postgres"

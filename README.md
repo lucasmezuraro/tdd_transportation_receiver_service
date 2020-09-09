@@ -9,6 +9,7 @@
 * Docker
 * Mockito
 * JUnit 4/5
+* Spring Cache (Redis)
 
 #### Development process.
 I am try use TDD to develop it, with small commits and inserting well practics when is possible.
