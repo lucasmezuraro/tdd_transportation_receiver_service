@@ -1,7 +1,7 @@
 package com.turbex.transportation.receiverservice.controllers;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,12 +25,12 @@ public class ProductControllerTest {
     @Mock
     ProductController productController;
 
-    @Test
+
     public void mustBeExists() {
         Assert.assertNotNull("", Optional.ofNullable(productController));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void shouldReturnSuccess() throws Exception {
         this.mockMvc.perform(get("/product/")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -38,11 +38,18 @@ public class ProductControllerTest {
                         .is2xxSuccessful());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void shouldReturnSuccessulWhenSetParam() throws Exception {
         this.mockMvc.perform(get("/product/{id}", 1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status()
                 .is2xxSuccessful());
     }
+
+    @Test
+    public void ShouldReturnANotFoundException() throws Exception {
+        this.mockMvc.perform(get("/{id}", 10000))
+                .andExpect(status().isNotFound());
+    }
+
 }

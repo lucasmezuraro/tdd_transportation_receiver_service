@@ -1,5 +1,8 @@
 package com.turbex.transportation.receiverservice.controllers;
 
+import com.turbex.transportation.receiverservice.entities.Product;
+import com.turbex.transportation.receiverservice.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/product")
 public class ProductController {
 
+    @Autowired
+    ProductService productService;
+
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> get() {
         return ResponseEntity.ok("Working");
@@ -18,7 +24,8 @@ public class ProductController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findOne(@PathVariable("id")  Long id) {
-        return ResponseEntity.ok(id);
+        Product product = productService.findById(id);
+        return ResponseEntity.ok(product);
     }
 
 }
