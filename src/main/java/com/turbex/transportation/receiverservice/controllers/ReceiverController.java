@@ -4,6 +4,7 @@ import com.turbex.transportation.receiverservice.dtos.DemandDTO;
 import com.turbex.transportation.receiverservice.entities.Demand;
 import com.turbex.transportation.receiverservice.services.ReceiverService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,7 @@ public class ReceiverController {
         return new ResponseEntity<Object>(demand, HttpStatus.ACCEPTED);
     }
 
+    @Cacheable(value = "DemandFindById", key = "#findDemandById")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> find(@PathVariable("id") Long id) {
         Demand demand = receiverService.findOne(id);
