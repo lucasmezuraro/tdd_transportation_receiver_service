@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -19,9 +21,11 @@ public class ProductController {
     ProductService productService;
 
 
+    @Cacheable(value = "ProductAll", key = "#findAllProducts")
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> get() {
-        return ResponseEntity.ok("Working");
+        List<Product> productList = productService.findAll();
+        return ResponseEntity.ok(productList);
     }
 
     @Cacheable(value = "ProductFindById", key = "#findProductById")
@@ -30,5 +34,8 @@ public class ProductController {
         Product product = productService.findById(id);
         return ResponseEntity.ok(product);
     }
+
+
+
 
 }

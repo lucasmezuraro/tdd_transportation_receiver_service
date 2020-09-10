@@ -13,6 +13,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -45,5 +47,15 @@ public class ProductServiceTest {
         when(productRepository.findById(id)).thenReturn(Optional.ofNullable(product));
         Product productReceived = productService.findById(id);
         Assert.assertEquals(product.getDescription(), productReceived.getDescription());
+    }
+
+    @Test
+    public void findAListOfProducts() {
+        Long id = Long.decode("1");
+        List<Product> productList = new ArrayList<Product>();
+        productList.add(product);
+        when(productRepository.findAll()).thenReturn(productList);
+        List<Product> productsReceived = productService.findAll();
+        Assert.assertEquals(productList.get(0).getDescription(), productsReceived.get(0).getDescription());
     }
 }
