@@ -2,6 +2,7 @@ package com.turbex.transportation.receiverservice.controllers;
 
 import com.turbex.transportation.receiverservice.entities.Product;
 import com.turbex.transportation.receiverservice.services.ProductService;
+import com.turbex.transportation.receiverservice.services.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
@@ -17,9 +18,13 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-    @Autowired
+
     ProductService productService;
 
+    @Autowired
+    public void getProductService(ProductServiceImpl productServiceImpl) {
+        this.productService = productServiceImpl;
+    }
 
     @Cacheable(value = "ProductAll", key = "#findAllProducts")
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

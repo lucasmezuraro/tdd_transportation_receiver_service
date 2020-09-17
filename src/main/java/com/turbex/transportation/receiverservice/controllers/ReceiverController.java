@@ -3,6 +3,7 @@ package com.turbex.transportation.receiverservice.controllers;
 import com.turbex.transportation.receiverservice.dtos.DemandDTO;
 import com.turbex.transportation.receiverservice.entities.Demand;
 import com.turbex.transportation.receiverservice.services.ReceiverService;
+import com.turbex.transportation.receiverservice.services.ReceiverServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,15 @@ import java.util.List;
 @RequestMapping("/")
 public class ReceiverController {
 
-    @Autowired
+
     ReceiverService receiverService;
 
+    @Autowired
+    public void getReceiveService(ReceiverServiceImpl receiverServiceImpl) {
+        this.receiverService = receiverServiceImpl;
+    }
+
+    @Cacheable(value = "DemandsAll", key = "#findAllDemands")
     @GetMapping("/")
     public ResponseEntity<List<Demand>> index() {
         List<Demand> demands = receiverService.findAll();
