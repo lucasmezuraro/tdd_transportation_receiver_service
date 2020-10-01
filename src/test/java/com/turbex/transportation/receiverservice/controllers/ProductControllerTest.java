@@ -38,13 +38,6 @@ public class ProductControllerTest {
                         .is2xxSuccessful());
     }
 
-    @Test
-    public void shouldReturnSuccessulWhenSetParam() throws Exception {
-        this.mockMvc.perform(get("/product/{id}", 1)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print()).andExpect(status()
-                .is2xxSuccessful());
-    }
 
     @Test
     public void ShouldReturnANotFoundException() throws Exception {
