@@ -29,7 +29,7 @@ public class ReceiverServiceTest {
     DemandRepository demandRepository;
 
     @InjectMocks
-    ReceiverService receiverService;
+    ReceiverServiceImpl receiverService;
 
     Demand demand;
     DemandDTO demandDTO;

@@ -27,7 +27,7 @@ public class ProductServiceTest {
     ProductRepository productRepository;
 
     @InjectMocks
-    ProductService productService;
+    ProductServiceImpl productService;
 
     Product product;
 
